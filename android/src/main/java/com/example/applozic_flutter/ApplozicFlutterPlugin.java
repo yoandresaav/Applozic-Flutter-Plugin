@@ -113,21 +113,39 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
                 result.error(ERROR, e.getLocalizedMessage(), null);
             }
         } else if (call.method.equals("launchChatWithGroupId")) {
-            new AlGroupInformationAsyncTask(context, (Integer) call.arguments, new AlGroupInformationAsyncTask.GroupMemberListener() {
-                @Override
-                public void onSuccess(Channel channel, Context context) {
-                    Intent intent = new Intent(context, ConversationActivity.class);
-                    intent.putExtra(ConversationUIService.GROUP_ID, channel.getKey());
-                    intent.putExtra(ConversationUIService.TAKE_ORDER, true);
-                    context.startActivity(intent);
-                    result.success(GsonUtils.getJsonFromObject(channel, Channel.class));
+            try {
+                Integer groupId = 0;
+                if (call.arguments instanceof Integer) {
+                    groupId = (Integer) call.arguments;
+                } else if (call.arguments instanceof String) {
+                    groupId = Integer.valueOf((String) call.arguments);
+                } else {
+                    result.error(ERROR, "Invalid groupId", null);
                 }
 
-                @Override
-                public void onFailure(Channel channel, Exception e, Context context) {
-                    result.error(ERROR, e != null ? e.getLocalizedMessage() : "Some internal error occurred", null);
+                if (groupId == 0) {
+                    result.error(ERROR, "Invalid groupId", null);
+                    return;
                 }
-            }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                new AlGroupInformationAsyncTask(context, groupId, new AlGroupInformationAsyncTask.GroupMemberListener() {
+                    @Override
+                    public void onSuccess(Channel channel, Context context) {
+                        Intent intent = new Intent(context, ConversationActivity.class);
+                        intent.putExtra(ConversationUIService.GROUP_ID, channel.getKey());
+                        intent.putExtra(ConversationUIService.TAKE_ORDER, true);
+                        context.startActivity(intent);
+                        result.success(GsonUtils.getJsonFromObject(channel, Channel.class));
+                    }
+
+                    @Override
+                    public void onFailure(Channel channel, Exception e, Context context) {
+                        result.error(ERROR, e != null ? e.getLocalizedMessage() : "Some internal error occurred", null);
+                    }
+                }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } catch (Exception e) {
+                result.error(ERROR, e.getLocalizedMessage(), null);
+            }
         } else if (call.method.equals("createGroup")) {
             ChannelInfo channelInfo = (ChannelInfo) GsonUtils.getObjectFromJson(GsonUtils.getJsonFromObject(call.arguments, Object.class), ChannelInfo.class);
             new AlChannelCreateAsyncTask(context, channelInfo, new AlChannelCreateAsyncTask.TaskListenerInterface() {

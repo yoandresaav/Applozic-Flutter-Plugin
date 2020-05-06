@@ -302,4 +302,11 @@ class ALChatManager: NSObject {
         }
         return "No name"
     }
+    
+    public static var defaultConfiguration: ALKConfiguration = {
+     var config = ALKConfiguration()
+          config.isTapOnNavigationBarEnabled = false
+          config.isProfileTapActionEnabled = false
+          return config
+        }()
 }
