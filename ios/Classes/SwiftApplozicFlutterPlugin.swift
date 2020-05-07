@@ -78,7 +78,7 @@ public class SwiftApplozicFlutterPlugin: NSObject, FlutterPlugin {
                     return
                 }
                 self.getChatManager(result: result).launchGroupWith(clientGroupId: (channel?.clientChannelKey)!, from: UIApplication.topViewController()!, configuration: ALChatManager.defaultConfiguration)
-                self.sendSuccessResultWithCallback(result: result, object: (channel?.dictionary())!)
+                self.sendSuccessResultWithCallback(result: result, message: channel!.clientChannelKey)
             }
         } else if(call.method == "createGroup") {
             guard let channelInfo = call.arguments as? Dictionary<String, Any> else {
@@ -168,6 +168,10 @@ public class SwiftApplozicFlutterPlugin: NSObject, FlutterPlugin {
             sendErrorResultWithCallback(result: result, message: "Seems like you have not logged in!")
         }
         return ALChatManager.init(applicationKey: applicationKey! as NSString)
+    }
+    
+    func customBackAction() {
+        UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
     }
 }
 

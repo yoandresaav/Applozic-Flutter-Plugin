@@ -116,7 +116,7 @@ class ALChatManager: NSObject {
     }
 
     func defaultChatViewSettings() {
-        ALUserDefaultsHandler.setGoogleMapAPIKey("AIzaSyCOacEeJi-ZWLLrOtYyj3PKMTOFEG7HDlw") // REPLACE WITH YOUR GOOGLE MAPKEY
+        ALUserDefaultsHandler.setGoogleMapAPIKey("<GEO_API_KEY>") // REPLACE WITH YOUR GOOGLE MAPKEY
         ALApplozicSettings.setListOfViewControllers([ALKConversationListViewController.description(), ALKConversationViewController.description()])
         ALApplozicSettings.setFilterContactsStatus(false)
         ALUserDefaultsHandler.setDebugLogsRequire(true)
@@ -131,11 +131,11 @@ class ALChatManager: NSObject {
     }
 
     func launch(viewController: UIViewController, from vc: UIViewController) {
-        let navVC = ALKBaseNavigationViewController(rootViewController: viewController)
-        guard vc.navigationController != nil else {
-            vc.present(navVC, animated: false, completion: nil)
-            return
-        }
+      let navVC = ALKBaseNavigationViewController(rootViewController: viewController)
+      guard vc.navigationController != nil else {
+        vc.present(navVC, animated: false, completion: nil)
+        return
+      }
         vc.modalPresentationStyle = .fullScreen
         vc.navigationController?.pushViewController(viewController, animated: false)
     }
