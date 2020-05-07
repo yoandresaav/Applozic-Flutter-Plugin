@@ -90,5 +90,32 @@ Launch the conversation with a group by passing the groupId as below:
                     });
 ```
 
-## Group
+## Create a group
+To create a group, you need to create a groupInfo object and then pass it to the create group function as below:
+
+```dart
+  dynamic groupInfo = {
+          'groupName': "My group",
+          'groupMemberList': ['userId1', 'userId2'],
+          'imageUrl': 'https://www.applozic.com/favicon.ico',
+          'type': 2,
+          'admin': 'userId1',
+          'metadata': {
+            'plugin': "Flutter",
+            'platform': "Android"
+          }
+        };
+
+  ApplozicFlutter.createGroup(groupInfo)
+            .then((groupId) {
+              print("Group created sucessfully: " + groupId);
+              ApplozicFlutter.launchChatWithGroupId(groupId)
+                  .then((value) => print("Launched successfully : " + value))
+                  .catchError((error, stack) {
+                print("Unable to launch group : " + error.toString());
+              });
+            })
+            .catchError((error, stack) =>
+                print("Group created failed : " + error.toString()));
+```
 
