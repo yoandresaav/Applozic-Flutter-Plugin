@@ -1,8 +1,8 @@
 name: applozic_flutter
-description: A new flutter plugin project.
+description:  Applozic flutter chat plugin that lets you add real time chat and in-app messaging in your flutter app.
 version: 0.0.1
-author:
-homepage:
+author: ashish@applozic.com
+homepage: https://applozic.com
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
