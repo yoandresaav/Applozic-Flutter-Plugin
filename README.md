@@ -12,7 +12,7 @@ Apps using Applozic can target Xcode 11 or later and AndroidX is required.
 ```yaml
  dependencies:
   # other dependencies
- applozic_flutter: ^0.0.1
+ applozic_flutter: ^0.0.2
 ```
 
 2) Install the package as below:
@@ -37,6 +37,7 @@ import 'package:applozic_flutter/applozic_flutter.dart';
 ```
 
 ## Authentication
+### Login
 Create Applozic user and pass user to login() function as below:
 ```dart
 dynamic user = {
@@ -57,13 +58,38 @@ ApplozicFlutter.login(user).then((response) {
 
 ```dart
 ApplozicFlutter.isLoggedIn().then((isLoggedIn) {
-       print("Logged in : " + value.toString());
         if (isLoggedIn) {
           //The user is logged in
          } esle {
           //The user is not logged in
          }
      });
+```
+
+### Update logged in user details
+You can update the logged in user details as below:
+
+```dart
+  dynamic user = {
+                    'displayName': '<New name>'
+                    'imageLink': '<New Image URL>'
+                  }
+
+  ApplozicFlutter.updateUserDetail(user)
+                        .then(
+                            (value) => print("User details updated : " + value))
+                        .catchError((e, s) => print(
+                            "Unable to update user details : " + e.toString()));
+```
+
+### Get logged in userId
+You can get the userId of the logged in user as below:
+```dart
+  ApplozicFlutter.getLoggedInUserId().then((userId) {
+      print("Logged in userId : " + userId);
+    }).catchError((error, stack) {
+      print("User get error : " + error);
+   });
 ```
 
 ## Conversation
@@ -118,4 +144,47 @@ To create a group, you need to create a groupInfo object and then pass it to the
             .catchError((error, stack) =>
                 print("Group created failed : " + error.toString()));
 ```
+
+## Add contacts
+Add contacts to applozic as below:
+
+```dart
+  dynamic user1 = {
+      'userId': "user1",
+      'displayName': ""User 1,
+      "metadata": {
+        'plugin': "Flutter",
+        'platform': "Android"
+      }
+    };
+
+  dynamic user2 = {
+      'userId': "user2",
+      'displayName': ""User 2,
+      "metadata": {
+        'plugin': "Flutter",
+        'platform': "Android"
+      }
+    };
+
+  ApplozicFlutter.addContacts([user1, user2])
+        .then((value) => print("Contact added successfully: " + value))
+        .catchError((e, s) => print("Failed to add contacts: " + e.toString()));
+```
+
+## Logout
+Logout from applozic as below:
+
+```dart
+ ApplozicFlutter.logout()
+                .then((value) =>
+                  print("Logout successfull")
+                .catchError((error, stack) =>
+                  print("Logout failed : " + error.toString()));
+```
+
+## Sample app
+You can checkout [Applozic Flutter sample app](https://github.com/AppLozic/Applozic-Flutter-Plugin/tree/master/example) that demonstrates the use of this plugin. 
+
+In case of any queries regarding this plugin, write to us at support@applozic.com.
 
