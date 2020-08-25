@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.applozic.mobicomkit.Applozic;
 import com.applozic.mobicomkit.api.account.register.RegistrationResponse;
@@ -69,12 +70,12 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
                     Applozic.registerForPushNotification(context, user.get('registrationId'), new AlPushNotificationHandler() {
                         @Override
                         public void onSuccess(RegistrationResponse registrationResponse) {
-
+                            Log("SUCCESS DENTRO", "Se registro");
                         }
 
                         @Override
                         public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
-
+                            Log("NO SUCCESS NADA", "No se registro");
                         }
                     });
                     result.success(GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class));
