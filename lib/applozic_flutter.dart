@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class ApplozicFlutter {
   static const MethodChannel _channel = const MethodChannel('applozic_flutter');
 
-  static Future<dynamic> login(dynamic user, String firebaseId) async {
+  static Future<dynamic> login({dynamic user, String firebaseId}) async {
     return await _channel.invokeMethod('login', user);
   }
 
