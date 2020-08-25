@@ -67,7 +67,7 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
             Applozic.connectUser(context, user, new AlLoginHandler() {
                 @Override
                 public void onSuccess(RegistrationResponse registrationResponse, Context context) {
-                    Applozic.registerForPushNotification(context, user.getRegistrationId() , new AlPushNotificationHandler() {
+                    Applozic.registerForPushNotification(context, user.getKey('registrationId'), new AlPushNotificationHandler() {
                         @Override
                         public void onSuccess(RegistrationResponse registrationResponse) {
                             //Log("SUCCESS DENTRO", "Se registro");
