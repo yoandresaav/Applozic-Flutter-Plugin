@@ -70,12 +70,12 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
                     Applozic.registerForPushNotification(context, user.get('registrationId'), new AlPushNotificationHandler() {
                         @Override
                         public void onSuccess(RegistrationResponse registrationResponse) {
-                            Log("SUCCESS DENTRO", "Se registro");
+                            //Log("SUCCESS DENTRO", "Se registro");
                         }
 
                         @Override
                         public void onFailure(RegistrationResponse registrationResponse, Exception exception) {
-                            Log("NO SUCCESS NADA", "No se registro");
+                            //Log("NO SUCCESS NADA", "No se registro");
                         }
                     });
                     result.success(GsonUtils.getJsonFromObject(registrationResponse, RegistrationResponse.class));
