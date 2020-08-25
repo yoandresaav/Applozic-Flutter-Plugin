@@ -6,7 +6,7 @@ class ApplozicFlutter {
   static const MethodChannel _channel = const MethodChannel('applozic_flutter');
 
   static Future<dynamic> login({dynamic user, String firebaseId}) async {
-    return await _channel.invokeMethod('login', user);
+    return await _channel.invokeMethod('login', { user: user, firebaseId: firebaseId });
   }
 
   static Future<bool> isLoggedIn() async {
