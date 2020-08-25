@@ -61,7 +61,7 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
         if (call.method.equals("login")) {
             User user = (User) GsonUtils.getObjectFromJson(GsonUtils.getJsonFromObject(call.argument("user"), Object.class), User.class);
 
-            final String firebaseToken = call.argument("firebaseToken");
+            final String firebaseId = call.argument("firebaseId");
 
             if (!TextUtils.isEmpty(user.getApplicationId())) {
                 Applozic.init(context, user.getApplicationId());
@@ -70,7 +70,7 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
                 @Override
                 public void onSuccess(RegistrationResponse registrationResponse, Context context) {
 
-                    Applozic.registerForPushNotification(context, firebaseToken, new AlPushNotificationHandler() {
+                    Applozic.registerForPushNotification(context, firebaseId, new AlPushNotificationHandler() {
                         @Override
                         public void onSuccess(RegistrationResponse registrationResponse) {
                             //Log("SUCCESS DENTRO", "Se registro");
