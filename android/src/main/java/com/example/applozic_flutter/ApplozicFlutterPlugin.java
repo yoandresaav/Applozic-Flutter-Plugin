@@ -44,6 +44,7 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
     private static final String ERROR = "Error";
     private Activity context;
     private MethodChannel methodChannel;
+    private String registrationId = "";
 
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "applozic_flutter");
@@ -64,11 +65,12 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
             if (!TextUtils.isEmpty(user.getApplicationId())) {
                 Applozic.init(context, user.getApplicationId());
             }
+            registrationId = user.getRegistrationId();
             Applozic.connectUser(context, user, new AlLoginHandler() {
                 @Override
                 public void onSuccess(RegistrationResponse registrationResponse, Context context) {
 
-                    Applozic.registerForPushNotification(context, user.getRegistrationId().toString(), new AlPushNotificationHandler() {
+                    Applozic.registerForPushNotification(context, registrationId, new AlPushNotificationHandler() {
                         @Override
                         public void onSuccess(RegistrationResponse registrationResponse) {
                             
