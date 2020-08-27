@@ -187,28 +187,6 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
             } catch (Exception e) {
                 result.error(ERROR, e.toString(), null);
             }
-        } else if (call.method.equals("updateFirebaseFCM")) {
-            // FIREBASE UPDATE
-            try {
-                if (Applozic.isConnected(context)) {
-                    User user = (User) GsonUtils.getObjectFromJson(GsonUtils.getJsonFromObject(call.arguments, Object.class), User.class);
-                    new AlUserUpdateTask(context, user, new AlCallback() {
-                        @Override
-                        public void onSuccess(Object message) {
-                            result.success(SUCCESS);
-                        }
-
-                        @Override
-                        public void onError(Object error) {
-                            result.error(ERROR, "Unable to update user details", null);
-                        }
-                    }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                } else {
-                    result.error(ERROR, "User not authorised. This usually happens when calling the function before conversationBuilder or loginUser. Make sure you call either of the two functions before updating the user details", null);
-                }
-            } catch (Exception e) {
-                result.error(ERROR, e.toString(), null);
-            }
         } else if (call.method.equals("addContacts")) {
             UserDetail[] userDetails = (UserDetail[]) GsonUtils.getObjectFromJson(GsonUtils.getJsonFromObject(call.arguments, Object.class), UserDetail[].class);
             for (UserDetail userDetail : userDetails) {
