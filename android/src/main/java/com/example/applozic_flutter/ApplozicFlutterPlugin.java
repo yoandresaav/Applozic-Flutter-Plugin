@@ -44,7 +44,7 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
     private static final String ERROR = "Error";
     private Activity context;
     private MethodChannel methodChannel;
-    private String registrationId = "";
+    private String firebaseId = "";
 
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "applozic_flutter");
@@ -60,17 +60,20 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
     @Override
     public void onMethodCall(final MethodCall call, final Result result) {
         if (call.method.equals("login")) {
-            final User user = (User) GsonUtils.getObjectFromJson(GsonUtils.getJsonFromObject(call.arguments, Object.class), User.class);
+            User user = (User) GsonUtils.getObjectFromJson(GsonUtils.getJsonFromObject(call.arguments, Object.class), User.class);
+            
+            firebaseId = user.getRegistrationId();
+            user.setRegistrationId(null);
 
             if (!TextUtils.isEmpty(user.getApplicationId())) {
                 Applozic.init(context, user.getApplicationId());
             }
-            registrationId = user.getRegistrationId();
+            
             Applozic.connectUser(context, user, new AlLoginHandler() {
                 @Override
                 public void onSuccess(RegistrationResponse registrationResponse, Context context) {
 
-                    Applozic.registerForPushNotification(context, registrationId, new AlPushNotificationHandler() {
+                    Applozic.registerForPushNotification(context, firebaseId, new AlPushNotificationHandler() {
                         @Override
                         public void onSuccess(RegistrationResponse registrationResponse) {
                             
