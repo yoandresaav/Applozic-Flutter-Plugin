@@ -223,7 +223,7 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
                 result.error(ERROR, "User not authorised. UserId is empty", null);
             }
         } else if (call.method.equals("isApplozicNotification")) {
-            if (Applozic.isApplozicNotification(call.arguments)){
+            if (Applozic.isApplozicNotification(this, call.arguments)){
                 result.success(0);
             } else {
                 result.success(1);
