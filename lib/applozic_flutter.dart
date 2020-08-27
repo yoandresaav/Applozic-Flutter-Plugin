@@ -45,4 +45,9 @@ class ApplozicFlutter {
   static Future<String> getLoggedInUserId() async {
     return await _channel.invokeMethod('getLoggedInUserId');
   }
+
+  static Future<String> isApplozicNotification(dynamic message) async {
+    return await _channel.invokeMethod('isApplozicNotification', message);
+  }
+  
 }
