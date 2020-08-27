@@ -59,7 +59,7 @@ public class ApplozicFlutterPlugin implements MethodCallHandler {
     @Override
     public void onMethodCall(final MethodCall call, final Result result) {
         if (call.method.equals("login")) {
-            User user = (User) GsonUtils.getObjectFromJson(GsonUtils.getJsonFromObject(call.arguments, Object.class), User.class);
+            final User user = (User) GsonUtils.getObjectFromJson(GsonUtils.getJsonFromObject(call.arguments, Object.class), User.class);
 
             if (!TextUtils.isEmpty(user.getApplicationId())) {
                 Applozic.init(context, user.getApplicationId());
