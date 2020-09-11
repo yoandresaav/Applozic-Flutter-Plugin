@@ -12,7 +12,7 @@ Apps using Applozic can target Xcode 11 or later and AndroidX is required.
 ```yaml
  dependencies:
   # other dependencies
- applozic_flutter: ^0.0.2
+ applozic_flutter: ^0.0.3
 ```
 
 2) Install the package as below:
